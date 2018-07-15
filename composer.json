@@ -1,0 +1,48 @@
+{
+  "name": "elliott-matthew",
+  "description": "Elliott Matthew",
+  "homepage": "https://www.elliottmatthew.com/",
+  "type": "project",
+  "support": {
+    "email": "andris@kwtdesign.co.uk"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "plugins/contact-form-extended"
+    },
+    {
+      "type": "path",
+      "url": "plugins/recaptcha-verify"
+    }
+  ],
+  "require": {
+    "craftcms/cms": "3.0.7",
+    "vlucas/phpdotenv": "^2.4.0",
+    "verbb/image-resizer": "2.0.3",
+    "craftcms/contact-form": "2.1.1",
+    "craftcms/redactor": "2.0.1",
+    "kwtdesign/contact-form-extended": "^0.0.1",
+    "kwtdesign/recaptcha-verify": "^0.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "modules\\": "modules/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "7.0"
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "@composer dump-autoload -o",
+      "@php craft setup/welcome"
+    ]
+  }
+}

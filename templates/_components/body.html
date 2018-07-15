@@ -1,0 +1,9 @@
+<div class="uk-margin-left uk-margin-right" uk-scrollspy="cls: uk-animation-fade; delay: 100">
+	{{ body|raw }}
+	{% if relatedPage is defined and relatedPage %}
+		{% set uri = craft.app.request.segments|last %}
+		<div {{ uri is empty ? 'class="uk-text-center"' }}>
+			<a class="uk-button uk-button-primary uk-button-large" href="{{ relatedPage.url }}">{{ relatedPage.title }}</a>
+		</div>
+	{% endif %}
+</div>

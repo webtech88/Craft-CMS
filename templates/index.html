@@ -1,0 +1,42 @@
+{% extends '_layouts/default' %}
+
+{% set title = siteName %}
+{% set metaTitle = entry.metaTitle|default('') %}
+{% set metaDescription = entry.metaDescription|default('') %}
+
+{% block banner %}
+
+  {% set image = entry.banner.one() %}
+  {% include '_components/slideshow' with {
+    image: image,
+    heading: entry.title,
+    tagline: entry.tagline
+  } only %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="uk-section">
+  <div class="uk-container uk-container-small">
+    {% include '_components/body' with {
+      body: entry.body,
+      relatedPage: entry.relatedPage.one()
+    } only %}
+  </div>
+</div>
+
+{% set servicePage = craft.entries.type('services').one() %}
+{% if servicePage %}
+  {% set services = servicePage.getChildren().all() %}
+  {% include '_components/children' with {
+    title: servicePage,
+    entries: services
+  } only %}
+{% endif %}
+
+{% if entry.displayClients %}
+  {% include '_components/clients' with {} only %}
+{% endif %}
+
+{% endblock %}

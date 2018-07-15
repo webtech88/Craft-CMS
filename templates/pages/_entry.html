@@ -1,0 +1,26 @@
+{% if entry is not defined %}{% exit 404 %}{% endif %}
+{% extends '_layouts/default' %}
+
+{% set title = entry.title %}
+{% set metaTitle = entry.metaTitle|default('') %}
+{% set metaDescription = entry.metaDescription|default('') %}
+
+{% block banner %}
+
+  {% set image = entry.banner %}
+  {% include '_components/banner' with {
+    image: image|length ? image.one() : '',
+    heading: entry.title
+  } only %}
+
+{% endblock %}
+
+{% block content %}
+
+	{% include 'pages/_type/' ~ entry.type with { entry: entry } only %}
+
+	{% if entry.displayClients %}
+	  {% include '_components/clients' with {} only %}
+	{% endif %}
+
+{% endblock %}

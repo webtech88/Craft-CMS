@@ -1,0 +1,7 @@
+@mixin hook-utility-misc() {
+	@media (max-width: $breakpoint-small) {
+		.uk-height-small {
+			height: $height-small-height / 2;
+		}
+	}
+}

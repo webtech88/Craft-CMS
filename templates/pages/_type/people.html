@@ -1,0 +1,81 @@
+<div class="uk-section">
+  <div class="uk-container uk-container-small">
+    {% include '_components/body' with {
+      body: entry.body,
+      relatedPage: entry.relatedPage.one()
+    } only %}
+  </div>
+</div>
+
+{% set people = entry.people.all() %}
+{% if people|length %}
+	{% set imageTransform = { width: 450, height: 450 } %}
+  <div class="uk-background-default">
+    <div class="uk-container">
+      <div class="uk-margin-medium-top uk-margin-medium-bottom uk-margin-left uk-margin-right">
+        {% for person in people %}
+          <div class="uk-background-muted uk-padding-small uk-margin-top">
+            <div class="uk-grid-match uk-grid-collapse" uk-grid>
+              <div class="uk-width-1-1 uk-width-1-3@m" uk-scrollspy="cls: uk-animation-fade; delay: 100;">
+                <div>
+                  <div class="uk-cover-container uk-background-default" style="height: 0; padding-bottom: 100%;">
+                    {% set photo = person.photo.one() %}
+                    {% if photo %}
+                      {% do photo.setTransform(imageTransform) %}
+                      <img src="{{ photo.url }}" alt="{{ photo.title }}" uk-cover>
+                      <canvas width="" height="" class="uk-height-medium uk-hidden@m"></canvas>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="uk-width-expand@m uk-padding-small custom-people-body" uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+                <div class="uk-margin-medium-left">
+                  <div class="uk-flex">
+                    <div class="custom-people-body-icon">
+                      <img src="{{ url('assets/img/logo-icon.svg') }}" alt="{{ siteName }}">
+                    </div>
+                    <div class="uk-flex-1">
+                      <h3 class="uk-margin-remove">{{ person.fullName }}</h3>
+                    </div>
+                  </div>
+                  <div><span class="uk-badge uk-text-uppercase">{{ person.role }}</span></div>
+                  <p>{{ person.about }}</p>
+                  {% if person.twitter or person.linkedIn or person.email or person.telephone %}
+                    <p class="uk-margin-remove-bottom">
+                      {% if person.twitter %}
+                        <span class="uk-display-inline-block uk-text-nowrap uk-margin-small-bottom">
+                          <a class="uk-icon-button custom-icon-social" href="{{ person.twitter }}" target="_blank" uk-icon="twitter"></a>
+                        </span>
+                      {% endif %}
+                      {% if person.linkedIn %}
+                        <span class="uk-display-inline-block uk-text-nowrap uk-margin-small-bottom">
+                          <a class="uk-icon-button custom-icon-social" href="{{ person.linkedIn }}" target="_blank" uk-icon="linkedin"></a>
+                        </span>
+                      {% endif %}
+                      {% if person.email %}
+                        <span class="uk-display-inline-block uk-text-nowrap uk-margin-small-bottom">
+                          <span class="uk-icon-button custom-icon-social">
+                            <img src="{{ url('assets/img/icon-mail.svg') }}" alt="" uk-svg>
+                          </span>
+                          <a href="mailto:{{ person.email }}">{{ person.email }}</a>
+                        </span>
+                      {% endif %}
+                      {% if person.telephone %}
+                        <span class="uk-display-inline-block uk-text-nowrap uk-margin-small-bottom">
+                          <span class="uk-icon-button custom-icon-social">
+                            <img src="{{ url('assets/img/icon-receiver.svg') }}" alt="" uk-svg>
+                          </span>
+                          <a href="tel:{{ person.telephone }}">{{ person.telephone }}</a>
+                        </span>
+                      {% endif %}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}

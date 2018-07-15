@@ -1,0 +1,23 @@
+{
+  "name": "kwtdesign/recaptcha-verify",
+  "description": "Verifies google reCAPTCHA.",
+  "version": "0.0.1",
+  "type": "craft-plugin",
+  "minimum-stability": "dev",
+  "require": {
+    "craftcms/cms": "^3.0.0-RC1",
+    "google/recaptcha": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "recaptchaverify\\": "src/"
+    }
+  },
+  "extra": {
+    "handle": "recaptcha-verify",
+    "name": "reCAPTCHA Verify",
+    "developer": "Karlis Melkis",
+    "developerUrl": "http://nourl.io",
+    "class": "recaptchaverify\\RecaptchaVerify"
+  }
+}

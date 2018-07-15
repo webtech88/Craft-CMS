@@ -1,0 +1,42 @@
+<IfModule mod_php7.c>
+  php_value post_max_size 15M
+  php_value upload_max_filesize 15M
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # IE Redirect (MSIE for 10 and lower, Trident for 11)
+    RewriteCond %{HTTP_USER_AGENT} MSIE [NC]
+    RewriteRule .? MSIE/ie.php [L]
+
+    #<IfVersion >= 2.4>
+  		# Redirect HTTP to HTTPS
+  		#RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  		#RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  	#</IfVersion>
+  	#<IfVersion < 2.4>
+  		# Redirect HTTP to HTTPS
+  		RewriteCond %{HTTPS} off
+  		RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  	#</IfVersion>
+
+    # Redirect to main domain
+    RewriteCond %{HTTP_HOST} ^(www\.)?(elliottmatthew\.co\.uk|eml\.legal)
+    RewriteRule (.*) https://www.elliottmatthew.com/? [R=301,L]
+
+    # Redirect to www
+    RewriteCond %{HTTP_HOST} !^(staging|dev|www)\.elliottmatthew.com$ [NC]
+  	RewriteCond %{HTTP_HOST} ^(.*)\.elliottmatthew.com$ [NC,OR]
+  	RewriteCond %{HTTP_HOST} ^elliottmatthew.com$ [NC]
+  	RewriteRule ^(.*)$ https://www.elliottmatthew.com/$1 [R=301,L]
+
+    # Favicons
+    RewriteCond %{REQUEST_URI} ^/(favicon\.ico|favicon(.*)\.png|apple-touch-icon(.*)\.png|android-chrome(.*)\.png|mstile(.*)\.png|manifest\.json|browserconfig\.xml|safari-pinned-tab\.svg)$ [NC]
+  	RewriteRule ^(.*)$ /assets/favicon/$1 [L,QSA]
+
+    # Send would-be 404 requests to Craft
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule (.+) index.php?p=$1 [QSA,L]
+</IfModule>

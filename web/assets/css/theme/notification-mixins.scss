@@ -1,0 +1,19 @@
+@mixin hook-notification-message() {
+	font-weight: 500;
+	display: flex;
+	padding: 15px;
+	.uk-notification-close {
+		position: static;
+		top: auto;
+		right: auto;
+		display: inline-flex !important;
+		align-items: center;
+		order: 2;
+	}
+	> div {
+		flex: 1;
+		.uk-icon {
+			margin-right: 5px;
+		}
+	}
+}

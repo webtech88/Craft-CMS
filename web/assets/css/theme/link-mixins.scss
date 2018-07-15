@@ -1,0 +1,7 @@
+@mixin hook-link-text() {
+	font-weight: $base-body-font-weight;
+}
+
+@mixin hook-link-text-hover() {
+	font-weight: inherit;
+}

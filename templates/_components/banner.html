@@ -1,0 +1,15 @@
+<div class="uk-cover-container uk-height-medium uk-background-default">
+	{% if image %}
+		<img src="{{ image.url }}" alt="{{ image.title }}" uk-cover>
+		<div class="uk-position-cover uk-overlay-default"></div>
+		<div class="uk-position-cover custom-hero-overlay"></div>
+	{% endif %}
+	<div class="uk-container uk-height-1-1 uk-position-relative uk-flex uk-flex-bottom uk-light">
+		<div class="uk-position-top-center uk-position-small uk-hidden@s custom-hero-logo">
+			<img src="{{ url('assets/img/logo-icon.svg') }}" alt="{{ siteName }}" uk-svg>
+		</div>
+		<h1 class="uk-heading-hero uk-margin-medium-bottom uk-margin-left uk-margin-right" uk-scrollspy="cls: uk-animation-slide-top-small">
+			{{ heading }}
+		</h1>
+	</div>
+</div>

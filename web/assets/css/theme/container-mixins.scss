@@ -1,0 +1,13 @@
+@mixin hook-container-misc() {
+	@media (max-width: $breakpoint-small) {
+		.uk-container {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+	@media (min-width: $breakpoint-medium) {
+		.custom-container-half-small {
+			max-width: $container-max-width / 2;
+		}
+	}
+}

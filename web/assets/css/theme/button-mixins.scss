@@ -1,0 +1,35 @@
+@mixin hook-button() {
+	padding-bottom: 2px !important;
+	font-weight: 700;
+	border: none !important;
+	position: relative;
+	overflow: hidden;
+	&:not(.custom-button-muted):before {
+		content: '';
+		position: absolute;
+		left: -26px;
+		bottom: -12px;
+		width: 46px;
+		height: 58px;
+		opacity: 0.15;
+		background-image: url('/assets/img/logo-icon.svg');
+		background-size: contain;
+	}
+	@include custom-transition-default(background-color);
+}
+
+@mixin hook-button-misc() {
+	.custom-button-width {
+		width: 154px;
+		padding-left: 0;
+		padding-right: 0;
+		margin: 2.5px;
+	}
+	.custom-button-muted {
+		text-transform: uppercase;
+		background-color: rgba($custom-color-light, 0.15);
+		&:hover {
+			background-color: rgba($custom-color-light, 0.25);
+		}
+	}
+}

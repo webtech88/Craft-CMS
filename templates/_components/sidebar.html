@@ -1,0 +1,42 @@
+<div class="uk-tile-muted uk-panel custom-logo" uk-scrollspy="cls: uk-animation-fade; delay: 100">
+	<a class="uk-display-block" href="/">
+		<img src="{{ url('assets/img/logo.svg') }}" alt="{{ siteName }}">
+	</a>
+</div>
+
+{% set pages = craft.entries.section('pages').level(1).all() %}
+{% set contactUs = craft.entries.section('contactUs').one() %}
+{% set uri = craft.app.request.segments|last %}
+<ul class="uk-nav uk-nav-default uk-margin-top uk-margin-bottom uk-m" uk-scrollspy="cls: uk-animation-fade; delay: 200">
+	<li {{ uri is empty ? 'class="uk-active"' }}><a href="{{ siteUrl }}">Home</a></li>
+	{% for page in pages %}
+		{% set subPages = page.getChildren().all() %}
+		<li class="{{ subPages|length ? 'uk-parent' }}{{ uri == page.slug ? ' uk-active' }}">
+			<a href="{{ page.url }}">{{ page.title }}</a>
+			{% if subPages|length %}
+				<ul class="uk-nav-sub">
+					{% for subPage in subPages %}
+						<li {{ uri == subPage.slug ? 'class="uk-active"' }}><a href="{{ subPage.url }}">{{ subPage.title }}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</li>
+	{% endfor %}
+	{% if contactUs %}
+		<li {{ uri == contactUs.slug ? 'class="uk-active"' }}><a href="{{ contactUs.url }}">{{ contactUs.title }}</a></li>
+	{% endif %}
+</ul>
+
+{% if social.facebook or social.twitter or social.linkedIn %}
+	<div class="social-icons" uk-scrollspy="cls: uk-animation-fade; delay: 300">
+		{% if social.facebook %}
+			<a class="uk-icon-button custom-icon-social" href="{{ social.facebook }}" target="_blank" uk-icon="facebook"></a>
+		{% endif %}
+		{% if social.twitter %}
+			<a class="uk-icon-button custom-icon-social" href="{{ social.twitter }}" target="_blank" uk-icon="twitter"></a>
+		{% endif %}
+		{% if social.linkedIn %}
+			<a class="uk-icon-button custom-icon-social" href="{{ social.linkedIn }}" target="_blank" uk-icon="linkedin"></a>
+		{% endif %}
+	</div>
+{% endif %}

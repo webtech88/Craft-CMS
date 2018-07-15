@@ -1,0 +1,3 @@
+@mixin custom-transition-default($for: all, $time: $custom-transition-time, $ease: $custom-transition-ease) {
+	transition: $for $time $ease;
+}

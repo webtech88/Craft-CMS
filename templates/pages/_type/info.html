@@ -1,0 +1,17 @@
+<div class="uk-section">
+  <div class="uk-container uk-container-small">
+    {% include '_components/body' with {
+      body: entry.body,
+      relatedPage: entry.relatedPage.one()
+    } only %}
+  </div>
+</div>
+
+{% set parent = entry.getParent() %}
+{% if parent %}
+  {% set children = parent.getChildren().all() %}
+  {% include '_components/children' with {
+    title: parent.title,
+    entries: children
+  } only %}
+{% endif %}

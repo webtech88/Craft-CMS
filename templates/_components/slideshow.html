@@ -1,0 +1,25 @@
+<div class="uk-cover-container uk-height-large uk-background-default">
+	{% if image %}
+		<img src="{{ image.url }}" alt="{{ image.title }}" uk-cover>
+		<div class="uk-position-cover uk-overlay-default"></div>
+	{% endif %}
+	<div class="uk-container uk-height-1-1 uk-position-relative uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-text-center">
+		<h1 class="uk-heading-hero uk-margin-remove-bottom uk-margin-small-left uk-margin-small-right uk-light" uk-scrollspy="cls: uk-animation-slide-top-medium">
+			{{ heading }}
+		</h1>
+		<h3 class="uk-heading-primary uk-margin-remove-top uk-margin-remove-bottom uk-margin-small-left uk-margin-small-right uk-light" uk-scrollspy="cls: uk-animation-slide-bottom-small">
+			{{ tagline }}
+		</h3>
+		<div class="uk-margin-medium-top uk-margin-small-left uk-margin-small-right uk-flex-inline uk-flex-wrap uk-flex-center">
+			{% set contactUs = craft.entries.section('contactUs').one() %}
+			{% if contactUs %}
+				<a class="uk-button uk-button-primary uk-button-large custom-button-width" href="{{ contactUs.url }}" uk-scrollspy="cls: uk-animation-slide-left-medium; delay: 100">
+					{{ contactUs.title }}
+				</a>
+			{% endif %}
+			<a class="uk-button uk-button-default uk-button-large custom-button-width" href="https://elliottmatthew.portal.ospreyapproach.com/main" target="_blank" uk-scrollspy="cls: uk-animation-slide-right-medium; delay: 100">
+				Customer Portal
+			</a>
+		</div>
+	</div>
+</div>

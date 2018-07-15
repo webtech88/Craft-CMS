@@ -1,0 +1,11 @@
+@mixin hook-grid-misc() {
+	.custom-child {
+		height: 0;
+		padding-bottom: 100%;
+		@media (max-width: $breakpoint-small) {
+			h4 {
+				font-size: 0.86666667rem; // 13px
+			}
+		}
+	}
+}

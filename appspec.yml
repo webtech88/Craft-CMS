@@ -1,0 +1,13 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/vhosts/elliottmatthew.com/www
+permissions:
+  - object: /var/www/vhosts/elliottmatthew.com/www
+    pattern: "**"
+    owner: ec2-user
+    group: apache
+    mode: 755
+    type:
+      - file

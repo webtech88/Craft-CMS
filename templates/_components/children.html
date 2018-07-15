@@ -1,0 +1,35 @@
+{% if entries|length %}
+	{% set imageTransform = { width: 450, height: 450 } %}
+	<div class="uk-position-relative">
+		<div class="uk-grid-small uk-child-width-1-2 uk-child-width-1-4@m" uk-grid uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 100">
+			{% for entry in entries %}
+				<div>
+					<div class="uk-panel custom-child">
+						<div class="uk-position-cover uk-background-default uk-light uk-flex">
+							<div class="uk-cover-container uk-flex-1 uk-transition-toggle">
+								{% set image = entry.banner.one() %}
+								{% if image %}
+									{% do image.setTransform(imageTransform) %}
+									<div class="uk-transition-scale-up uk-transition-opaque uk-height-1-1">
+										<img src="{{ image.url }}" alt="{{ image.title }}" uk-cover>
+									</div>
+								{% endif %}
+								<a class="uk-link-reset uk-position-cover {{ craft.app.request.segments|last == entry.slug ? 'uk-overlay-primary' : 'uk-overlay-default' }}" href="{{ entry.url }}">
+									<div class="uk-position-center uk-text-center">
+										<h4 class="uk-margin-remove-bottom uk-margin-top">{{ entry.title }}</h4>
+										<div class="uk-transition-slide-bottom-small">
+											<div class="uk-button uk-button-small custom-button-muted">Find out more</div>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="uk-position-center">
+			<div class="uk-button uk-button-secondary uk-button-large">{{ title }}</div>
+		</div>
+	</div>
+{% endif %}

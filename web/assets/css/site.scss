@@ -1,0 +1,187 @@
+// 1. Your custom variables and variable overwrites.
+@import 'theme/variables.scss';
+@import 'theme/badge.scss';
+@import 'theme/base.scss';
+@import 'theme/button.scss';
+@import 'theme/container.scss';
+@import 'theme/dropdown.scss';
+@import 'theme/form.scss';
+@import 'theme/grid.scss';
+@import 'theme/heading.scss';
+@import 'theme/icon.scss';
+@import 'theme/inverse.scss';
+@import 'theme/link.scss';
+@import 'theme/nav.scss';
+@import 'theme/navbar.scss';
+@import 'theme/notification.scss';
+@import 'theme/offcanvas.scss';
+@import 'theme/overlay.scss';
+@import 'theme/utility.scss';
+
+// 2. Import default variables and available mixins.
+@import "node_modules/uikit/src/scss/variables-theme.scss";
+@import "node_modules/uikit/src/scss/mixins-theme.scss";
+
+// 3. Your custom mixin overwrites.
+@import 'theme/mixins.scss';
+@import 'theme/badge-mixins.scss';
+@import 'theme/base-mixins.scss';
+@import 'theme/button-mixins.scss';
+@import 'theme/container-mixins.scss';
+@import 'theme/form-mixins.scss';
+@import 'theme/grid-mixins.scss';
+@import 'theme/heading-mixins.scss';
+@import 'theme/icon-mixins.scss';
+@import 'theme/link-mixins.scss';
+@import 'theme/nav-mixins.scss';
+@import 'theme/notification-mixins.scss';
+@import 'theme/overlay-mixins.scss';
+@import 'theme/utility-mixins.scss';
+
+// 4. Import UIkit
+@import "node_modules/uikit/src/scss/uikit-theme.scss";
+
+// Sticky sidebar has to have set width
+#sidebar {
+	overflow-x: visible;
+	width: 200px;
+	> div {
+		width: 280px;
+		margin-left: -20px !important;
+	}
+	nav {
+		width: auto !important; /* IE fix */
+		left: 0; /* IE fix */
+		> ul,
+		> .social-icons {
+			margin-left: 20px;
+		}
+	}
+}
+
+#offcanvas-sidebar {
+	nav > ul,
+	nav > .social-icons {
+		margin-left: 20px;
+	}
+}
+
+.custom-logo {
+	width: 240px;
+	padding: 20px;
+	@media (min-width: $breakpoint-large) {
+		width: 270px;
+	}
+}
+
+// Hero
+.custom-hero-logo {
+	width: 50px;
+	color: white;
+	svg {
+		max-width: 100%;
+		height: auto;
+		box-sizing: border-box;
+	}
+}
+
+// Clients
+.custom-client-logo {
+	opacity: 0.25;
+	&.uk-open {
+		opacity: 1;
+	}
+}
+
+// People
+.custom-people-body {
+	@media (max-width: $breakpoint-medium) {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		> div {
+			margin-left: 0 !important;
+		}
+	}
+}
+
+.custom-people-body-icon {
+	width: 20px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	@media (min-width: $breakpoint-small) {
+		width: 25px;
+		padding-top: 5px;
+		padding-right: 10px;
+	}
+	@media (min-width: $breakpoint-medium) {
+		margin-left: -35px;
+	}
+}
+
+// Contact
+.custom-contact-card {
+	@media (min-width: $breakpoint-medium) {
+		top: auto;
+		left: auto;
+		right: 0;
+		bottom: 100%;
+		margin-bottom: -80px;
+		transform: none !important;
+	}
+}
+
+.custom-contact-card-image {
+	width: 50px;
+	@media (min-width: $breakpoint-small) {
+		width: 60px;
+	}
+	@media (min-width: $breakpoint-medium) {
+		width: 70px;
+	}
+}
+
+.custom-contact-card-body {
+	font-size: 0.93333333rem; // 14px
+	strong {
+		font-size: $global-medium-font-size; // 18px
+	}
+}
+
+#recaptcha {
+	width: 100%;
+	max-width: 200px;
+	transform: scale(0.85);
+	transform-origin: left top;
+}
+
+// Footer
+.custom-tile-muted {
+	// font-size: $global-medium-font-size; // 18px
+	min-height: 100px;
+	> div {
+		width: 100px;
+		height: 80%;
+		border-right: 1px solid $global-border;
+	}
+}
+
+// Mobile
+@media (max-width: $breakpoint-medium) {
+	.custom-tiles > div + div {
+		margin-top: 1px !important;
+	}
+}
+
+// TODO fucking popover
+.uk-dropdown {
+	width: $width-large-width;
+	max-width: 100%;
+	box-sizing: border-box;
+	@media (max-width: $breakpoint-small) {
+		width: $width-medium-width;
+		&.uk-open {
+			left: 50% !important;
+			margin-left: -150px;
+		}
+	}
+}

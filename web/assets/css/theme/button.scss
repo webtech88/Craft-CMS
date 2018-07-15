@@ -1,0 +1,24 @@
+$button-font-size: $global-font-size;
+$button-small-font-size: 0.66666667rem; // 10px
+$button-large-font-size: $button-font-size;
+
+$button-default-background: $global-background;
+$button-default-color: $global-inverse-color;
+$button-default-hover-background: darken($button-default-background, 5%);
+$button-default-hover-color: $button-default-color;
+$button-default-active-background: darken($button-default-background, 10%);
+$button-default-active-color: $button-default-color;
+
+$button-primary-background: $global-primary-background;
+$button-primary-color: $global-inverse-color;
+$button-primary-hover-background: darken($button-primary-background, 5%);
+$button-primary-hover-color: $button-primary-color;
+$button-primary-active-background: darken($button-primary-background, 10%);
+$button-primary-active-color: $button-primary-color;
+
+$button-secondary-background: $global-secondary-background;
+$button-secondary-color: $global-inverse-color;
+$button-secondary-hover-background: darken($button-secondary-background, 5%);
+$button-secondary-hover-color: $button-secondary-color;
+$button-secondary-active-background: darken($button-secondary-background, 10%);
+$button-secondary-active-color: $button-secondary-color;

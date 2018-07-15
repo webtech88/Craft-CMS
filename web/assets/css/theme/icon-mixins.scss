@@ -1,0 +1,15 @@
+@mixin hook-icon-misc() {
+	.custom-icon-social {
+		width: 24px;
+		height: 24px;
+		border-radius: 0;
+		background: $global-background;
+		color: $global-inverse-color;
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: darken($global-background, 50%);
+			color: $global-inverse-color;
+		}
+	}
+}

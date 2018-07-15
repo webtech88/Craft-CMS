@@ -1,0 +1,175 @@
+{% set title = title ? title ~ ' | ' ~ siteName %}
+{% if metaTitle is defined and metaTitle %}{% set title = metaTitle %}{% endif %}
+<!DOCTYPE html>
+<html lang="{{ craft.app.language }}" prefix="og: http://ogp.me/ns#">
+<head>
+	<meta charset="UTF-8">
+	<title>{{ title }}</title>
+	<meta http-equiv="cleartype" content="on">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	{% if (craft.app.request.isLivePreview or getenv('ENVIRONMENT') != 'live') or (robots is defined and robots) %}
+	<meta name="robots" content="noindex, nofollow">
+	{% endif %}
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% if metaDescription is defined and metaDescription %}
+	<meta name="description" content="{{ metaDescription }}">
+	{% endif %}
+	<meta name="author" content="{{ siteName }}">
+
+	<meta property="og:locale" content="{{ craft.app.language }}">
+	<meta property="og:title" content="{{ title }}">
+	{% if metaDescription is defined and metaDescription is not empty %}
+	<meta property="og:description" content="{{ metaDescription }}">
+	{% endif %}
+	<meta property="og:url" content="{{ craft.app.request.url }}">
+	<meta property="og:image" content="{{ url('assets/img/logo.svg') }}">
+	<meta property="og:site_name" content="{{ siteName }}">
+	<meta property="og:type" content="website">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#333333">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="home" href="{{ siteUrl }}">
+	<link rel="canonical" href="{% if canonicalUrl is defined %}{{ canonicalUrl }}{% else %}{{ craft.app.request.url }}{% endif %}">
+
+	<!-- CSS -->
+	<link href="//fonts.googleapis.com/css?family=Lato:300,300i,400,400i,900,900i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+	{% do view.registerCssFile('/assets/styles.css') %}
+
+	{% if not craft.app.request.isLivePreview and getenv('ENVIRONMENT') == 'production' %}
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-10144293-54');
+		ga('send', 'pageview');
+	</script>
+	{% endif %}
+	{{ head() }}
+</head>
+<body>
+
+	{{ beginBody() }}
+
+	<noscript>
+		<div style="display:block;text-align:center;padding:50px;position:relative;z-index:10001;">
+			You need to enable JavaScript to view this site.
+		</div>
+	</noscript>
+
+	<div id="app" class="uk-offcanvas-content uk-position-relative">
+		<div style="display:block;position:fixed;top:0;left:0;width:100%;height:100%;background-color: white;z-index:10000;" v-if="!mounted"></div>
+
+		{# Mobile sidebar #}
+		<div id="offcanvas-sidebar" uk-offcanvas="mode: push; flip: true; overlay: true">
+			<nav class="uk-offcanvas-bar uk-width-1-1">
+				<a class="uk-navbar-toggle uk-position-top-right uk-position-z-index" uk-toggle href="#offcanvas-sidebar">
+					<img class="uk-preserve" src="{{ url('assets/img/icon-close.svg') }}" alt="" uk-svg>
+				</a>
+				{% include '_components/sidebar' %}
+			</nav>
+		</div>
+
+		{# Mobile sidebar toggle #}
+		<a class="uk-navbar-toggle uk-position-top-right uk-position-z-index uk-hidden@s" uk-toggle href="#offcanvas-sidebar">
+			<img class="uk-preserve" src="{{ url('assets/img/icon-menu.svg') }}" alt="" uk-svg>
+		</a>
+
+		<div class="uk-container uk-container-large">
+			<div class="uk-grid-collapse" uk-grid>
+
+				{# Main sidebar #}
+				<div id="sidebar" class="uk-visible@s" uk-height-viewport>
+					<div class="uk-height-1-1 uk-overflow-auto">
+						<nav class="uk-display-inline-block uk-margin-top">
+							{% include '_components/sidebar' %}
+						</nav>
+					</div>
+				</div>
+
+				<div class="uk-width-expand">
+
+					<div id="content" class="uk-background-muted">
+						{% if block('banner') is defined %}
+							{{ block('banner') }}
+						{% endif %}
+
+						{% if block('content') is defined %}
+							{{ block('content') }}
+						{% endif %}
+					</div>
+
+					<div class="uk-section uk-padding-remove-bottom uk-margin-bottom uk-flex-center">
+						<div class="uk-flex-center" uk-grid>
+							<div class="uk-width-5-6 uk-width-1-1@m uk-width-5-6@l">
+
+								<div class="uk-child-width-1-3@m uk-margin-bottom uk-text-center custom-tiles" uk-grid uk-height-match="target: > div > a">
+									<div>
+										<a class="uk-link-reset uk-background-muted uk-flex uk-flex-middle custom-tile-muted" href="tel:{{ contact.telephone }}">
+											<div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
+												<img class="uk-preserve" src="{{ url('assets/img/icon-phone.svg') }}" uk-svg>
+											</div>
+											<span class="uk-text-bold uk-text-break uk-margin-small-left uk-margin-small-right uk-margin-top uk-margin-bottom uk-flex-1">{{ contact.telephone }}</span>
+										</a>
+									</div>
+									<div>
+										<a class="uk-link-reset uk-background-muted uk-flex uk-flex-middle custom-tile-muted" href="mailto:{{ contact.email }}?Subject=Enquiry from website">
+											<div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
+												<img class="uk-preserve" src="{{ url('assets/img/icon-email.svg') }}" uk-svg>
+											</div>
+											<span class="uk-text-bold uk-text-break uk-margin-small-left uk-margin-small-right uk-margin-top uk-margin-bottom uk-flex-1">{{ contact.email }}</span>
+										</a>
+									</div>
+									<div>
+										<a class="uk-link-reset uk-background-muted uk-flex uk-flex-middle custom-tile-muted" href="https://www.google.co.uk/maps/search/{{ contact.address }}" target="_blank">
+											<div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
+												<img class="uk-preserve" src="{{ url('assets/img/icon-location.svg') }}" uk-svg>
+											</div>
+											<span class="uk-text-bold uk-text-break uk-margin-small-left uk-margin-small-right uk-margin-top uk-margin-bottom uk-flex-1">{{ contact.address }}</span>
+										</a>
+									</div>
+								</div>
+
+								{% set pages = craft.entries.type('legal').level(1).all() %}
+								<footer class="uk-text-small uk-text-center">
+									<p>{{ contact.company }} is registered in England & Wales. Registered number: 11058558. Registered office: {{ contact.address }}. This company is regulated and authorised by the Solicitors Regulation Authority.</p>
+									<strong>&copy; {{ now|date('Y') }} {{ contact.company }}</strong>
+									{% for page in pages %}
+									| <a class="uk-link-text uk-display-inline-block" href="{{ page.url }}">{{ page.title }}</a>
+									{% endfor %}
+									| <a class="uk-link-text uk-display-inline-block" href="http://www.kwtdesign.co.uk" title="High Quality Webdesign | Covent Garden London | KWT Design" target="_blank">Website by <strong>KWT Design</strong></a>
+								</footer>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="uk-overlay uk-position-cover" uk-scrollspy="cls: uk-animation-fade" v-if="backdrop" style="z-index: 998;"></div>
+
+	</div>
+
+	{{ endBody() }}
+
+	{% do view.registerJsFile('/assets/scripts.js') %}
+
+</body>
+</html>

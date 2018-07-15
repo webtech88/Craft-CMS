@@ -1,0 +1,17 @@
+@mixin hook-form() {
+	font-size: $global-medium-font-size; // 18px
+	font-weight: 900;
+	border: 1px solid transparent;
+	@include custom-transition-default(border-color);
+}
+
+@mixin hook-form-focus() {
+	border-color: lighten($global-background, 50%);
+}
+
+@mixin hook-form-misc() {
+	.uk-form-icon {
+		border-bottom: 4px solid transparent;
+		color: $global-danger-background;
+	}
+}

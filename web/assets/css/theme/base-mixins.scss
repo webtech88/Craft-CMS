@@ -1,0 +1,60 @@
+@mixin hook-base-body() {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin hook-base-link() {
+	font-weight: 900;
+}
+
+@mixin hook-base-link-hover() {
+
+}
+
+@mixin hook-base-blockquote() {
+	font-weight: 500;
+}
+
+@mixin hook-base-misc() {
+	.custom-quote {
+		font-family: cursive;
+		font-size: 15rem; // 225px
+		line-height: 0.6;
+		color: $custom-color-muted;
+	}
+}
+
+@mixin hook-base-heading() {
+	line-height: 1;
+	letter-spacing: -2.25px;
+}
+
+@mixin hook-base-h1() {
+
+}
+
+@mixin hook-base-h2() {
+	@media (max-width: $breakpoint-small) {
+		font-size: 1.6rem; // 24px
+	}
+}
+
+@mixin hook-base-h3() {
+	letter-spacing: -1.75px;
+	@media (max-width: $breakpoint-small) {
+		font-size: 1.2rem; // 18px
+		letter-spacing: -1px;
+	}
+}
+
+@mixin hook-base-h4() {
+	letter-spacing: -1px;
+	@media (max-width: $breakpoint-small) {
+		font-size: 1.06666667rem; // 16px
+		letter-spacing: -0.5px;
+	}
+}
+
+@mixin hook-base-h5() {
+	letter-spacing: -0.5px;
+}

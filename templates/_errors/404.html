@@ -1,0 +1,24 @@
+{% extends '_layouts/default' %}
+
+{% set title	= 'Error 404' %}
+
+{% block banner %}
+
+  {% include '_components/banner' with {
+    image: '',
+    heading: 'Error 404'
+  } only %}
+
+{% endblock %}
+
+{% block content %}
+
+	<div class="uk-section">
+	  <div class="uk-container">
+	    {% include '_components/body' with {
+	      body: '<h2>Sorry, not found</h2><p>Unfortunately the link you are trying to access does not exist on our website. Have you typed it in correctly? Try browsing our website via the main menu.</p>'
+	    } only %}
+	  </div>
+	</div>
+
+{% endblock %}

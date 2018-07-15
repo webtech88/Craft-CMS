@@ -1,0 +1,144 @@
+{% if entry is not defined %}{% exit 404 %}{% endif %}
+{% extends '_layouts/default' %}
+
+{% set title = entry.title %}
+{% set metaTitle = entry.metaTitle|default('') %}
+{% set metaDescription = entry.metaDescription|default('') %}
+
+{% block banner %}
+
+	{% set image = entry.banner.one() %}
+	{% include '_components/banner' with {
+		image: image,
+		heading: entry.title
+	} only %}
+
+{% endblock %}
+
+{% block content %}
+
+	<div id="contact" class="uk-grid-collapse uk-grid-match uk-child-width-expand@m" uk-grid>
+
+		<div class="uk-section">
+			<div class="uk-container uk-container-small">
+
+				<div class="uk-flex uk-flex-right">
+					<div class="custom-container-half-small">
+						{% include '_components/body' with {
+							body: entry.body
+						} only %}
+					</div>
+				</div>
+
+				<div class="uk-flex uk-flex-right">
+					<div class="uk-flex-1 custom-container-half-small">
+						<div class="uk-grid-collapse" uk-grid>
+							<div class="uk-width-4-5@m">
+								<div class="uk-margin-left uk-margin-right">
+									{% set recaptchaInstalled = craft.app.plugins.isPluginInstalled('recaptcha-verify') %}
+									{% set recaptchaEnabled = craft.app.plugins.isPluginEnabled('recaptcha-verify') %}
+
+									<form method="post" accept-charset="UTF-8" @submit.prevent="onSubmit">
+										{{ csrfInput() }}
+										<div class="uk-margin-small-bottom uk-position-relative" :uk-tooltip="errors.fromName">
+											<span class="uk-form-icon uk-form-icon-flip uk-form-danger" uk-icon="warning" v-if="errors.fromName"></span>
+											<input class="uk-input" type="text" placeholder="Name" v-model="fromName" :class="{ 'uk-form-danger': errors.fromName }">
+										</div>
+										<div class="uk-margin-small-bottom uk-position-relative" :uk-tooltip="errors.message_company">
+											<span class="uk-form-icon uk-form-icon-flip uk-form-danger" uk-icon="warning" v-if="errors.message_company"></span>
+											<input class="uk-input" type="text" placeholder="Company" v-model="message.company" :class="{ 'uk-form-danger': errors.message_company }">
+										</div>
+										<div class="uk-margin-small-bottom uk-position-relative" :uk-tooltip="errors.fromEmail">
+											<span class="uk-form-icon uk-form-icon-flip uk-form-danger" uk-icon="warning" v-if="errors.fromEmail"></span>
+											<input class="uk-input" type="email" placeholder="E-mail" v-model="fromEmail" :class="{ 'uk-form-danger': errors.fromEmail }">
+										</div>
+										<div class="uk-margin-small-bottom uk-position-relative" :uk-tooltip="errors.message_enquiry">
+											<span class="uk-form-icon uk-form-icon-flip uk-form-danger" uk-icon="warning" v-if="errors.message_enquiry"></span>
+											<textarea class="uk-textarea" rows="5" placeholder="Message" v-model="message.enquiry" :class="{ 'uk-form-danger': errors.message_enquiry }"></textarea>
+										</div>
+										{% if recaptchaInstalled and recaptchaEnabled %}
+											<div id="recaptcha" class="uk-width-small"></div>
+										{% endif %}
+										<button class="uk-button uk-button-primary uk-disabled" v-if="loading">Please wait...</button>
+										<button class="uk-button uk-button-primary" v-else>Send message</button>
+									</form>
+
+									{% if recaptchaInstalled and recaptchaEnabled %}
+										<script>
+											var recaptchaToken = null;
+
+											function onloadCallback()
+											{
+												grecaptcha.render('recaptcha', {
+													sitekey  : '{{ craft.recaptchaVerify.getRecaptchaSiteKey() }}',
+													callback : verifyCallback
+												});
+											};
+
+											function verifyCallback(response)
+											{
+												recaptchaToken = response;
+											};
+										</script>
+
+										<script src="//www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+									{% else %}
+										<script>
+											var recaptchaToken = null;
+										</script>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="uk-background-default uk-position-relative">
+			<div>
+				<div class="uk-tile-muted uk-position-top-center uk-position-small uk-width-medium uk-padding-small uk-position-z-index custom-contact-card">
+					<div class="uk-flex">
+						<div class="uk-margin-small-top uk-margin-small-bottom custom-contact-card-image">
+							<img src="{{ url('assets/img/logo-icon.svg') }}" alt="{{ siteName }}">
+						</div>
+						<div class="uk-flex-1 uk-margin-small-left">
+							<div class="uk-margin-small-top uk-margin-small-bottom custom-contact-card-body">
+								<strong class="uk-text-nowrap">{{ contact.company }}</strong><br />
+								<span>{{ contact.address }}</span><br />
+								<a href="mailto:{{ contact.email }}?Subject=Enquiry from website">{{ contact.email }}</a><br />
+								<a href="tel:{{ contact.telephone }}">tel: {{ contact.telephone }}</a><br />
+								{% if contact.fax %}
+									<a href="fax:{{ contact.fax }}">fax: {{ contact.fax }}</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="uk-height-1-1" id="gmap" style="min-height: 568px;">
+					<google-map
+						:center="mapCenter"
+						:zoom="17"
+						:options="{styles: mapStyles, panControl: false, zoomControl: true, mapTypeControl: false, scaleControl: false, streetViewControl: false, overviewMapControl: false}"
+						style="width: 100%; height: 100%"
+					>
+						<google-marker
+							v-for="m in markers"
+							:position="m.coordinates"
+							:clickable="true"
+							:draggable="false"
+							@click="center=m.coordinates"
+						/>
+					</google-map>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	{% if entry.displayClients %}
+	  {% include '_components/clients' with {} only %}
+	{% endif %}
+
+{% endblock %}
